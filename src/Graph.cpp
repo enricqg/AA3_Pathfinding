@@ -71,3 +71,8 @@ std::vector< std::vector<int> > Graph::ReadFile(char* filename)
 
 	return tmp_terrain;
 }
+
+Node* Graph::cell2node(Vector2D position)
+{
+	
+}

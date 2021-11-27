@@ -14,7 +14,7 @@ private:
 	std::vector< std::vector<int> > ReadFile(char* filename);
 
 public:
-
+	Node* cell2node(Vector2D position);
 
 };
 

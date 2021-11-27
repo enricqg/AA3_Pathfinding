@@ -26,3 +26,13 @@ int Node::GetWeight()
 {
 	return weight;
 }
+
+Vector2D Node::GetPosition()
+{
+	return pos;
+}
+
+std::vector<Node*> Node::GetNeighbours()
+{
+	return neighbours;
+}

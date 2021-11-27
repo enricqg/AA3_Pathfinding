@@ -19,7 +19,9 @@ public:
 	void SetWeight(int _weight);
 	void AddNeighbour(Node* neighbour);
 	int GetWeight();
-	
+	Vector2D GetPosition();
+
+	std::vector<Node*> GetNeighbours();
 
 };
 
