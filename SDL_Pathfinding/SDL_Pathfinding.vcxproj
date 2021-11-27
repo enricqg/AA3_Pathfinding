@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{48D8AFB0-551E-45CB-8730-E2CF8571445D}</ProjectGuid>
     <RootNamespace>SDL_Pathfinding</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
     <ProjectName>SDL_Pathfinding</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -137,7 +137,9 @@
     <ClCompile Include="..\src\Grid.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\Node.cpp" />
+    <ClCompile Include="..\src\Pathfinding.cpp" />
     <ClCompile Include="..\src\PathFollowing.cpp" />
+    <ClCompile Include="..\src\SceneBFS.cpp" />
     <ClCompile Include="..\src\ScenePathFindingMouse.cpp" />
     <ClCompile Include="..\src\SDL_SimpleApp.cpp" />
     <ClCompile Include="..\src\Seek.cpp" />
@@ -152,6 +154,7 @@
     <ClInclude Include="..\src\Path.h" />
     <ClInclude Include="..\src\Pathfinding.h" />
     <ClInclude Include="..\src\PathFollowing.h" />
+    <ClInclude Include="..\src\SceneBFS.h" />
     <ClInclude Include="..\src\ScenePathFindingMouse.h" />
     <ClInclude Include="..\src\Seek.h" />
     <ClInclude Include="..\src\utils.h" />

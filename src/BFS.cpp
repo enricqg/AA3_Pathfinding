@@ -1,6 +1,11 @@
 #include "BFS.h"
 #include <queue>
 #include <map>
+#include "SDL_SimpleApp.h"
+
+BFS::BFS()
+{
+}
 
 std::vector<Vector2D> BFS::CalculatePath(Node* initialPos, Node* targetPos)
 {
@@ -32,11 +37,11 @@ std::vector<Vector2D> BFS::CalculatePath(Node* initialPos, Node* targetPos)
     //Recuperar el camí
     Node* current = targetPos;
     std::vector<Vector2D> path;
-    path.push_back(targetPos->GetPosition());
+    path.push_back(cell2pix(targetPos->GetPosition()));
 
     while (current != initialPos) {
         current = came_from[current];
-        path.push_back(current->GetPosition());
+        path.push_back(cell2pix(current->GetPosition()));
     }
 
     std::reverse(path.begin(), path.end());
@@ -44,3 +49,10 @@ std::vector<Vector2D> BFS::CalculatePath(Node* initialPos, Node* targetPos)
     return path;
 
 }
+
+Vector2D BFS::cell2pix(Vector2D cell)
+{
+    int offset = CELL_SIZE / 2;
+    return Vector2D(cell.x * CELL_SIZE + offset, cell.y * CELL_SIZE + offset);
+}
+

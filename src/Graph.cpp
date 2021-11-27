@@ -16,15 +16,15 @@ Graph::Graph(char* filename)
 		for (int j = 0; j < tmp_terrain[i].size(); j++)
 		{
 
-			Node* tmp_n = new Node(i, j, tmp_terrain[i][j]);
+			Node* tmp_n = new Node(j, i, tmp_terrain[i][j]);
 			tmp_nodes_row.push_back(tmp_n); // push a la fila i
 		}
 		tmp_nodes.push_back(tmp_nodes_row);
 	}
 
-	for (int i = 1; i < tmp_nodes.size() - 1; i++) //ens saltem els contorns
+	for (int i = 0; i < tmp_nodes.size(); i++) //ens saltem els contorns
 	{
-		for (int j = 1; j < tmp_nodes[i].size() - 1; j++)
+		for (int j = 0; j < tmp_nodes[i].size(); j++)
 		{
 			if (tmp_nodes[i][j]->GetWeight() != 0) // si es mur no llegim
 			{
@@ -45,6 +45,8 @@ Graph::Graph(char* filename)
 			}
 		}
 	}
+
+	if (true) {}
 }
 
 std::vector< std::vector<int> > Graph::ReadFile(char* filename)
@@ -74,5 +76,11 @@ std::vector< std::vector<int> > Graph::ReadFile(char* filename)
 
 Node* Graph::cell2node(Vector2D position)
 {
-	
+	for (int i = 0; i < nodes.size(); i++) {
+		if (nodes[i]->GetPosition() == position) {
+			return nodes[i];
+		}
+	}
+
+	return nullptr;
 }

@@ -3,34 +3,35 @@
 using namespace std;
 
 Agent::Agent() : sprite_texture(0),
-                 position(Vector2D(100, 100)),
-	             target(Vector2D(1000, 100)),
-	             velocity(Vector2D(0,0)),
-	             currentTargetIndex(-1),
-				 mass(0.1f),
-				 max_force(150),
-				 max_velocity(200),
-				 orientation(0),
-				 sprite_num_frames(0),
-	             sprite_w(0),
-	             sprite_h(0),
-	             draw_sprite(false)
+position(Vector2D(100, 100)),
+target(Vector2D(1000, 100)),
+velocity(Vector2D(0, 0)),
+currentTargetIndex(-1),
+mass(0.1f),
+max_force(150),
+max_velocity(200),
+orientation(0),
+sprite_num_frames(0),
+sprite_w(0),
+sprite_h(0),
+draw_sprite(false)
 {
 }
 
-Agent::Agent(char* filename) : sprite_texture(0),
-							   position(Vector2D(100, 100)),
-							   target(Vector2D(1000, 100)),
-							   velocity(Vector2D(0, 0)),
-							   currentTargetIndex(-1),
-							   mass(0.1f),
-							   max_force(150),
-							   max_velocity(200),
-							   orientation(0),
-							   sprite_num_frames(0),
-							   sprite_w(0),
-							   sprite_h(0),
-							   draw_sprite(false)
+Agent::Agent(char* filename, Pathfinding* _pathfindingAlgorithm) : sprite_texture(0),
+position(Vector2D(100, 100)),
+target(Vector2D(1000, 100)),
+velocity(Vector2D(0, 0)),
+currentTargetIndex(-1),
+mass(0.1f),
+max_force(150),
+max_velocity(200),
+orientation(0),
+sprite_num_frames(0),
+sprite_w(0),
+sprite_h(0),
+draw_sprite(false),
+pathfindingAlgorithm(_pathfindingAlgorithm)
 {
 	graph = new Graph(filename);
 }
@@ -43,7 +44,7 @@ Agent::~Agent()
 		delete (steering_behaviour);
 }
 
-void Agent::setBehavior(SteeringBehavior *behavior)
+void Agent::setBehavior(SteeringBehavior* behavior)
 {
 	steering_behaviour = behavior;
 }
@@ -83,6 +84,11 @@ void Agent::setPosition(Vector2D _position)
 	position = _position;
 }
 
+void Agent::setCellPosition(Vector2D _cellPosition)
+{
+	cellPosition = _cellPosition;
+}
+
 void Agent::setTarget(Vector2D _target)
 {
 	target = _target;
@@ -93,7 +99,7 @@ void Agent::setVelocity(Vector2D _velocity)
 	velocity = _velocity;
 }
 
-void Agent::update(float dtime, SDL_Event *event)
+void Agent::update(float dtime, SDL_Event* event)
 {
 
 	//cout << "agent update:" << endl;
@@ -110,7 +116,7 @@ void Agent::update(float dtime, SDL_Event *event)
 
 	// Apply the steering behavior
 	steering_behaviour->applySteeringForce(this, dtime);
-	
+
 	// Update orientation
 	if (velocity.Length())
 		orientation = (float)(atan2(velocity.y, velocity.x) * RAD2DEG);
@@ -176,31 +182,31 @@ void Agent::draw()
 	if (draw_sprite)
 	{
 		Uint32 sprite;
-		
+
 		if (velocity.Length() < 5.0)
 			sprite = 1;
 		else
-			sprite = (int)(SDL_GetTicks() / (-0.1*velocity.Length() + 250)) % sprite_num_frames;
-		
+			sprite = (int)(SDL_GetTicks() / (-0.1 * velocity.Length() + 250)) % sprite_num_frames;
+
 		SDL_Rect srcrect = { (int)sprite * sprite_w, 0, sprite_w, sprite_h };
 		SDL_Rect dstrect = { (int)position.x - (sprite_w / 2), (int)position.y - (sprite_h / 2), sprite_w, sprite_h };
 		SDL_Point center = { sprite_w / 2, sprite_h / 2 };
-		SDL_RenderCopyEx(TheApp::Instance()->getRenderer(), sprite_texture, &srcrect, &dstrect, orientation+90, &center, SDL_FLIP_NONE);
+		SDL_RenderCopyEx(TheApp::Instance()->getRenderer(), sprite_texture, &srcrect, &dstrect, orientation + 90, &center, SDL_FLIP_NONE);
 	}
-	else 
+	else
 	{
 		draw_circle(TheApp::Instance()->getRenderer(), (int)position.x, (int)position.y, 15, 255, 255, 255, 255);
-		SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), (int)position.x, (int)position.y, (int)(position.x+15*cos(orientation*DEG2RAD)), (int)(position.y+15*sin(orientation*DEG2RAD)));
+		SDL_RenderDrawLine(TheApp::Instance()->getRenderer(), (int)position.x, (int)position.y, (int)(position.x + 15 * cos(orientation * DEG2RAD)), (int)(position.y + 15 * sin(orientation * DEG2RAD)));
 	}
 
-	
+
 }
 
 bool Agent::loadSpriteTexture(char* filename, int _num_frames)
 {
 	if (_num_frames < 1) return false;
 
-	SDL_Surface *image = IMG_Load(filename);
+	SDL_Surface* image = IMG_Load(filename);
 	if (!image) {
 		cout << "IMG_Load: " << IMG_GetError() << endl;
 		return false;
@@ -216,4 +222,13 @@ bool Agent::loadSpriteTexture(char* filename, int _num_frames)
 		SDL_FreeSurface(image);
 
 	return true;
+}
+
+void Agent::CalculatePath(Vector2D targetPosition)
+{
+	std::vector<Vector2D> path = pathfindingAlgorithm->CalculatePath(graph->cell2node(cellPosition), graph->cell2node(targetPosition));
+
+	for (int i = 0; i < path.size(); i++) {
+		addPathPoint(path[i]);
+	}
 }

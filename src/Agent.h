@@ -8,6 +8,7 @@
 #include "Vector2D.h"
 #include "utils.h"
 #include "Graph.h"
+#include "BFS.h"
 
 class Graph; 
 
@@ -23,14 +24,14 @@ public:
 	};
 private:
 	SteeringBehavior *steering_behaviour;
-	Vector2D position;
+	Vector2D position, cellPosition;
 	Vector2D velocity;
 	Vector2D target;
 
 	// Pathfinding
 	Path path;
 	int currentTargetIndex;
-	//Pathfinding *pathfinding
+	Pathfinding* pathfindingAlgorithm;
 	Graph* graph;
 
 	float mass;
@@ -46,7 +47,7 @@ private:
 
 public:
 	Agent();
-	Agent(char* filename);
+	Agent(char* filename, Pathfinding* pathfinding);
 	~Agent();
 	Vector2D getPosition();
 	Vector2D getTarget();
@@ -56,6 +57,7 @@ public:
 	float getMass();
 	void setBehavior(SteeringBehavior *behavior);
 	void setPosition(Vector2D position);
+	void setCellPosition(Vector2D _cellPosition);
 	void setTarget(Vector2D target);
 	void setVelocity(Vector2D velocity);
 	void addPathPoint(Vector2D point);
@@ -67,5 +69,7 @@ public:
 	void update(float dtime, SDL_Event *event);
 	void draw();
 	bool Agent::loadSpriteTexture(char* filename, int num_frames=1);
+
+	void CalculatePath(Vector2D targetPosition);
 	
 };
