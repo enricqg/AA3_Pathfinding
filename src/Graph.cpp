@@ -37,7 +37,7 @@ Graph::Graph(char* filename)
 						if (y != 0 || x != 0) //si es ell mateix, no es s'afegeix a neighbours
 						{
 							if (tmp_nodes[i + x][j + y]->GetWeight() != 0) tmp_nodes[i][j]->AddNeighbour(tmp_nodes[i + x][j + y]);
-						}				
+						}
 					}
 				}
 
@@ -83,4 +83,39 @@ Node* Graph::cell2node(Vector2D position)
 	}
 
 	return nullptr;
+}
+
+Vector2D Graph::getNearestExistingPos(Vector2D position)
+{
+	Node* n = cell2node(position);
+
+	if (n != nullptr) return n->GetPosition();
+	
+	std::pair<Node*, float> nodeDistance;
+
+	//int x = -1;
+	//int y = -1;
+
+	for (int i = -1; i < 2; i++) {
+		for (int j = -1; i < 2; i++) {
+
+			if (i == -1 && j == -1) {
+				nodeDistance = std::make_pair(cell2node(Vector2D(position.x + i, position.y + j)), Vector2D::Distance(Vector2D(position.x + i, position.y + j), position));
+				/*if (nodeDistance.first == nullptr) 
+				{ 
+
+					continue; 
+				}*/
+			}
+			else {
+				if (cell2node(Vector2D(position.x + i, position.y + j)) == nullptr || (i==0&&j==0))continue;
+
+				else if (nodeDistance.second > Vector2D::Distance(Vector2D(position.x + i, position.y + j), position)) {
+					n = nodeDistance.first;
+				}
+			}
+		}
+	}
+
+	return n->GetPosition();
 }

@@ -53,6 +53,7 @@ public:
 	Agent(char* filename, Pathfinding* pathfinding);
 	~Agent();
 	Vector2D getPosition();
+	Vector2D getCellPosition();
 	Vector2D getTarget();
 	Vector2D getVelocity();
 	float getMaxVelocity();
@@ -74,5 +75,6 @@ public:
 	bool Agent::loadSpriteTexture(char* filename, int num_frames=1);
 
 	void CalculatePath(Vector2D targetPosition);
+	void CalculatePath(Vector2D targetPosition, Vector2D enemyPosition);
 	
 };

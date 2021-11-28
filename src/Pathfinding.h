@@ -9,5 +9,6 @@ public:
 	~Pathfinding();
 
 	virtual std::vector<Vector2D> CalculatePath(Node* initialPos, Node* targetPos);
+	virtual std::vector<Vector2D> CalculatePath(Node* initialPos, Node* targetPos, Node* enemyPos);
 };
 

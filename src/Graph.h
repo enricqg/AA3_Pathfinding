@@ -15,6 +15,7 @@ private:
 
 public:
 	Node* cell2node(Vector2D position);
+	Vector2D getNearestExistingPos(Vector2D position);
 
 };
 

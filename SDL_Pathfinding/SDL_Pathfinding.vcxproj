@@ -147,6 +147,7 @@
     <ClCompile Include="..\src\SceneDijkstra.cpp" />
     <ClCompile Include="..\src\SceneGreedyBFS.cpp" />
     <ClCompile Include="..\src\ScenePathFindingMouse.cpp" />
+    <ClCompile Include="..\src\SceneVersus.cpp" />
     <ClCompile Include="..\src\SDL_SimpleApp.cpp" />
     <ClCompile Include="..\src\Seek.cpp" />
     <ClCompile Include="..\src\utils.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="..\src\SceneDijkstra.h" />
     <ClInclude Include="..\src\SceneGreedyBFS.h" />
     <ClInclude Include="..\src\ScenePathFindingMouse.h" />
+    <ClInclude Include="..\src\SceneVersus.h" />
     <ClInclude Include="..\src\Seek.h" />
     <ClInclude Include="..\src\utils.h" />
     <ClInclude Include="..\src\Scene.h" />

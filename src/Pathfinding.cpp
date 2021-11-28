@@ -13,3 +13,8 @@ std::vector<Vector2D> Pathfinding::CalculatePath(Node* initialPos, Node* targetP
 	return std::vector<Vector2D>();
 }
 
+std::vector<Vector2D> Pathfinding::CalculatePath(Node* initialPos, Node* targetPos, Node* enemyPos)
+{
+	return std::vector<Vector2D>();
+}
+

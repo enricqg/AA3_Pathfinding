@@ -54,6 +54,11 @@ Vector2D Agent::getPosition()
 	return position;
 }
 
+Vector2D Agent::getCellPosition()
+{
+	return cellPosition;
+}
+
 Vector2D Agent::getTarget()
 {
 	return target;
@@ -86,6 +91,8 @@ void Agent::setPosition(Vector2D _position)
 
 void Agent::setCellPosition(Vector2D _cellPosition)
 {
+	//cellPosition = graph->getNearestExistingPos(_cellPosition);;
+
 	cellPosition = _cellPosition;
 }
 
@@ -155,6 +162,7 @@ int Agent::getPathSize()
 
 Vector2D Agent::getPathPoint(int idx)
 {
+	if (idx == -1) return position;
 	return path.points[idx];
 }
 
@@ -227,6 +235,40 @@ bool Agent::loadSpriteTexture(char* filename, int _num_frames)
 void Agent::CalculatePath(Vector2D targetPosition)
 {
 	std::vector<Vector2D> path = pathfindingAlgorithm->CalculatePath(graph->cell2node(cellPosition), graph->cell2node(targetPosition));
+
+	for (int i = 0; i < path.size(); i++) {
+		addPathPoint(path[i]);
+	}
+}
+
+void Agent::CalculatePath(Vector2D targetPosition, Vector2D enemyPosition)
+{
+	//canviar graf
+	Node* enemyNode = graph->cell2node(enemyPosition);
+	
+	std::vector<Node*> enemyNeigbours;
+
+	if (enemyNode != nullptr) {
+		enemyNode->SetWeight(10);
+
+		enemyNeigbours = enemyNode->GetNeighbours();
+
+		for (int i = 0; i < enemyNeigbours.size(); i++) {
+			if (enemyNeigbours[i] != nullptr)enemyNeigbours[i]->SetWeight(10);
+		}
+	}
+
+	std::vector<Vector2D> path = pathfindingAlgorithm->CalculatePath(graph->cell2node(cellPosition), graph->cell2node(targetPosition));
+
+	//restablecer grafo
+	if (enemyNode != nullptr) {
+
+		enemyNode->SetWeight(0);
+
+		for (int i = 0; i < enemyNeigbours.size(); i++) {
+			enemyNeigbours[i]->SetWeight(0);
+		}
+	}
 
 	for (int i = 0; i < path.size(); i++) {
 		addPathPoint(path[i]);

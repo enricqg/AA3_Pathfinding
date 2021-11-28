@@ -9,7 +9,7 @@ SceneGreedyBFS::SceneGreedyBFS()
 
 	loadTextures("../res/maze.png", "../res/coin.png");
 
-	//srand((unsigned int)time(NULL));
+	srand((unsigned int)time(NULL));
 
 	Agent* agent = new Agent("../res/maze.csv", new GreedyBFS);
 	agent->loadSpriteTexture("../res/soldier.png", 4);

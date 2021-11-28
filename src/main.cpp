@@ -8,6 +8,7 @@
 #include "SceneDijkstra.h"
 #include "SceneGreedyBFS.h"
 #include "SceneAStar.h"
+#include "SceneVersus.h"
 
 
 using namespace std;
@@ -65,6 +66,12 @@ int main(int argc, char ** argv)
 			{
 				delete(curr_scene);
 				curr_scene = new SceneAStar;
+				app->setWindowTitle(curr_scene->getTitle());
+			}
+			if (event.key.keysym.scancode == SDL_SCANCODE_6)
+			{
+				delete(curr_scene);
+				curr_scene = new SceneVersus;
 				app->setWindowTitle(curr_scene->getTitle());
 			}
 			if ((event.key.keysym.scancode == SDL_SCANCODE_Q) || (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE))
