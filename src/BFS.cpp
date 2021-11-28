@@ -14,6 +14,8 @@ std::vector<Vector2D> BFS::CalculatePath(Node* initialPos, Node* targetPos)
     std::map<Node*, Node*> came_from = {};
     came_from[initialPos] = nullptr;
 
+    int counter = 1;
+
     //recorrent fins a trobar el node target
     while (!frontier.empty()) {
         Node* current = frontier.front();
@@ -28,6 +30,8 @@ std::vector<Vector2D> BFS::CalculatePath(Node* initialPos, Node* targetPos)
             //busquem al mapa si s'ha visitat el veí (node)
             if (came_from.find(currentNeighbours[i]) == came_from.end()) {
                 frontier.push(currentNeighbours[i]);
+                counter++;
+                std::cout << counter << std::endl;
                 came_from[currentNeighbours[i]] = current;
             }
         }

@@ -9,6 +9,9 @@
 #include "utils.h"
 #include "Graph.h"
 #include "BFS.h"
+#include "Dijkstra.h"
+#include "GreedyBFS.h"
+#include "AStar.h"
 
 class Graph; 
 

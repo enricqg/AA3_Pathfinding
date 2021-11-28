@@ -1,8 +1,8 @@
-#include "SceneBFS.h"
+#include "SceneAStar.h"
 
 using namespace std;
 
-SceneBFS::SceneBFS()
+SceneAStar::SceneAStar()
 {
 	draw_grid = false;
 	maze = new Grid("../res/maze.csv");
@@ -11,7 +11,7 @@ SceneBFS::SceneBFS()
 
 	//srand((unsigned int)time(NULL));
 
-	Agent* agent = new Agent("../res/maze.csv", new BFS);
+	Agent* agent = new Agent("../res/maze.csv", new AStar);
 	agent->loadSpriteTexture("../res/soldier.png", 4);
 	agent->setBehavior(new PathFollowing);
 	agent->setTarget(Vector2D(-20, -20));
@@ -33,7 +33,7 @@ SceneBFS::SceneBFS()
 
 }
 
-SceneBFS::~SceneBFS()
+SceneAStar::~SceneAStar()
 {
 	if (background_texture)
 		SDL_DestroyTexture(background_texture);
@@ -46,7 +46,7 @@ SceneBFS::~SceneBFS()
 	}
 }
 
-void SceneBFS::update(float dtime, SDL_Event* event)
+void SceneAStar::update(float dtime, SDL_Event* event)
 {
 	/* Keyboard & Mouse events */
 	switch (event->type) {
@@ -69,7 +69,7 @@ void SceneBFS::update(float dtime, SDL_Event* event)
 		break;
 	}
 
-	
+
 
 	agents[0]->update(dtime, event);
 
@@ -92,7 +92,7 @@ void SceneBFS::update(float dtime, SDL_Event* event)
 
 }
 
-void SceneBFS::draw()
+void SceneAStar::draw()
 {
 	drawMaze();
 	drawCoin();
@@ -113,12 +113,12 @@ void SceneBFS::draw()
 	agents[0]->draw();
 }
 
-const char* SceneBFS::getTitle()
+const char* SceneAStar::getTitle()
 {
-	return "SDL Path Finding :: Pathfinfing BFS Demo";
+	return "SDL Path Finding :: Pathfinfing AStar Demo";
 }
 
-void SceneBFS::drawMaze()
+void SceneAStar::drawMaze()
 {
 	SDL_SetRenderDrawColor(TheApp::Instance()->getRenderer(), 0, 0, 255, 255);
 	SDL_Rect rect;
@@ -145,7 +145,7 @@ void SceneBFS::drawMaze()
 	//SDL_RenderCopy(TheApp::Instance()->getRenderer(), background_texture, NULL, NULL );
 }
 
-void SceneBFS::drawCoin()
+void SceneAStar::drawCoin()
 {
 	Vector2D coin_coords = maze->cell2pix(coinPosition);
 	int offset = CELL_SIZE / 2;
@@ -154,7 +154,7 @@ void SceneBFS::drawCoin()
 }
 
 
-bool SceneBFS::loadTextures(char* filename_bg, char* filename_coin)
+bool SceneAStar::loadTextures(char* filename_bg, char* filename_coin)
 {
 	SDL_Surface* image = IMG_Load(filename_bg);
 	if (!image) {

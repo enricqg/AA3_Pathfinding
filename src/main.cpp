@@ -5,6 +5,9 @@
 #include "SDL_SimpleApp.h"
 #include "ScenePathFindingMouse.h"
 #include "SceneBFS.h"
+#include "SceneDijkstra.h"
+#include "SceneGreedyBFS.h"
+#include "SceneAStar.h"
 
 
 using namespace std;
@@ -16,7 +19,7 @@ int main(int argc, char ** argv)
 	
 	SDL_SimpleApp *app = SDL_SimpleApp::Instance();
 
-	Scene *curr_scene = new ScenePathFindingMouse;
+	Scene *curr_scene = new SceneBFS;
 	app->setWindowTitle(curr_scene->getTitle());
 
 	
@@ -48,6 +51,21 @@ int main(int argc, char ** argv)
 			}
 			if (event.key.keysym.scancode == SDL_SCANCODE_3)
 			{
+				delete(curr_scene);
+				curr_scene = new SceneDijkstra;
+				app->setWindowTitle(curr_scene->getTitle());
+			}
+			if (event.key.keysym.scancode == SDL_SCANCODE_4)
+			{
+				delete(curr_scene);
+				curr_scene = new SceneGreedyBFS;
+				app->setWindowTitle(curr_scene->getTitle());
+			}
+			if (event.key.keysym.scancode == SDL_SCANCODE_5)
+			{
+				delete(curr_scene);
+				curr_scene = new SceneAStar;
+				app->setWindowTitle(curr_scene->getTitle());
 			}
 			if ((event.key.keysym.scancode == SDL_SCANCODE_Q) || (event.key.keysym.scancode == SDL_SCANCODE_ESCAPE))
 			{
