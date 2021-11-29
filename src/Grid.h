@@ -24,4 +24,5 @@ public:
 	bool isValidCell(Vector2D cell);
 	int getNumCellX();
 	int getNumCellY();
+	int GetCellWeight(int x, int y);
 };

@@ -5,7 +5,7 @@ using namespace std;
 SceneVersus::SceneVersus()
 {
 	draw_grid = false;
-	maze = new Grid("../res/maze.csv");
+	maze = new Grid("../res/mazeVersus.csv");
 
 	frameCounter = 0;
 
@@ -13,7 +13,7 @@ SceneVersus::SceneVersus()
 
 	srand((unsigned int)time(NULL));
 
-	Agent* agent = new Agent("../res/maze.csv", new AStar);
+	Agent* agent = new Agent("../res/mazeVersus.csv", new AStar);
 	agent->loadSpriteTexture("../res/soldier.png", 4);
 	agent->setBehavior(new PathFollowing);
 	agent->setTarget(Vector2D(-20, -20));
@@ -26,7 +26,7 @@ SceneVersus::SceneVersus()
 	agents[0]->setPosition(maze->cell2pix(rand_cell));
 	agents[0]->setCellPosition(rand_cell);
 
-	Agent* agent2 = new Agent("../res/maze.csv", new AStar);
+	Agent* agent2 = new Agent("../res/mazeVersus.csv", new AStar);
 	agent2->loadSpriteTexture("../res/soldier.png", 4);
 	agent2->setBehavior(new PathFollowing);
 	agent2->setTarget(Vector2D(-20, -20));

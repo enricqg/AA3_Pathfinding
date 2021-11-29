@@ -40,7 +40,7 @@ std::vector<Vector2D> Dijkstra::CalculatePath(Node* initialPos, Node* targetPos)
 			if (cost_so_far.find(currentNeighbours[i]) == cost_so_far.end()
 				|| new_cost < cost_so_far[currentNeighbours[i]]) {
 
-				cost_so_far[currentNeighbours[i]] = new_cost;
+				cost_so_far[currentNeighbours[i]] += new_cost;
 				frontier.push(std::make_pair(currentNeighbours[i], new_cost));
 				counter++;
 				std::cout << counter << std::endl;

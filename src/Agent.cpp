@@ -254,7 +254,7 @@ void Agent::CalculatePath(Vector2D targetPosition, Vector2D enemyPosition)
 		enemyNeigbours = enemyNode->GetNeighbours();
 
 		for (int i = 0; i < enemyNeigbours.size(); i++) {
-			if (enemyNeigbours[i] != nullptr)enemyNeigbours[i]->SetWeight(10);
+			if (enemyNeigbours[i] != nullptr)enemyNeigbours[i]->SetWeight(100);
 		}
 	}
 

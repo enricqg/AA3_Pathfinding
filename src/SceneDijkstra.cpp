@@ -135,6 +135,11 @@ void SceneDijkstra::drawMaze()
 				SDL_RenderFillRect(TheApp::Instance()->getRenderer(), &rect);
 			}
 			else {
+				int weight = maze->GetCellWeight(i, j);
+				SDL_SetRenderDrawColor(TheApp::Instance()->getRenderer(), 255 - 255/ weight,255- 255/ weight, 255-255/ weight, 255);
+				coords = maze->cell2pix(Vector2D((float)i, (float)j)) - Vector2D((float)CELL_SIZE / 2, (float)CELL_SIZE / 2);
+				rect = { (int)coords.x, (int)coords.y, CELL_SIZE, CELL_SIZE };
+				SDL_RenderFillRect(TheApp::Instance()->getRenderer(), &rect);
 				// Do not draw if it is not necessary (bg is already black)
 			}
 
